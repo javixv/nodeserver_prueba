@@ -1,1 +1,3 @@
-## Simple App con Node 
+## Simple App con Node
+
+Descripcion del proyecto : un servidor RES en Node
