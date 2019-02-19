@@ -47,7 +47,7 @@ app.get('/usuario', validacionToken, function(req, res) {
 
 });
 
-app.post('/usuario',[validacionToken. verificarROL], function(req, res) {
+app.post('/usuario',[validacionToken, verificarROL], function(req, res) {
 
     let body = req.body;
 
@@ -79,7 +79,7 @@ app.post('/usuario',[validacionToken. verificarROL], function(req, res) {
 
 });
 
-app.put('/usuario/:id',[validacionToken. verificarROL], function(req, res) {
+app.put('/usuario/:id',[validacionToken, verificarROL], function(req, res) {
 
     let id = req.params.id;
     let body = _.pick(req.body, ['nombre', 'email', 'img', 'role', 'estado']);
@@ -104,7 +104,7 @@ app.put('/usuario/:id',[validacionToken. verificarROL], function(req, res) {
 
 });
 
-app.delete('/usuario/:id',[validacionToken. verificarROL], function(req, res) {
+app.delete('/usuario/:id',[validacionToken, verificarROL], function(req, res) {
 
 
     let id = req.params.id;

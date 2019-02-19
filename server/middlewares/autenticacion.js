@@ -31,21 +31,21 @@ const jwt = require('jsonwebtoken');
   }
 
   let verificarROL = (req, res, next) => {
+    let usuario = req.usuario;
 
-    let usuario  = req.usuario;
-    if(usuario.role == "ADMIN_ROLE"){
+    if (usuario.role === 'ADMIN_ROLE') {
         next();
-    }
-    else{
+    } else {
+
         return res.json({
-            ok : false,
-            err : {
-                message = "ERROR el rol no es ADMIN"
+            ok: false,
+            err: {
+                message: 'El usuario no es administrador'
             }
-        })
+        });
     }
 
-  }
+  };
 
   module.exports = {
       validacionToken,
