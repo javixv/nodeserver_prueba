@@ -12,6 +12,8 @@ let Categoria = require('../models/categoria');
 app.get('/categoria', (req, res) => {
 
     Categoria.find({})
+             .sort('descripcion') // para ordenar el listado
+             .populate('usuario', 'nombre')
              .exec((err, categorias) =>{
                 if (err) {
                     return res.status(500).json({
