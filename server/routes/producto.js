@@ -67,38 +67,67 @@ let id = req.params.id
     })
 });
 
+
+/**
+ * Buscar producto con una exprecion Regular
+ */
+
+app.get('/producto/buscar/:termino', (req, res) => {
+
+    let termino = req.params.termino;
+    let regx = new RegExp(termino);
+
+    Producto.find( {nombre :regx})
+    .populate('categoria', 'descripcion')
+    .exec((err, produtoDB) => {
+
+        if (err) {
+            return res.status(500).json({
+                ok: false,
+                err
+            });
+        }
+
+        res.json({
+            ok : true,
+            produtoDB
+        })
+    })
+})
 /**
  * Crear un nuevo produtos
  */
-app.post('/producto', validacionToken, (res, req) => {
+app.post('/producto', validacionToken, (req, res) => {
+    // grabar el usuario
+    // grabar una categoria del listado 
 
-    
-let body = req.body;
+    let body = req.body;
 
-let producto = new Producto({
-    nombre: body.nombre,
-    precioUni: body.precioUni,
-    descripcion: body.descripcion,
-    disponible: body.disponible,
-    categoria: body.categoria,
-    usuario: req.usuario._id
-})
+    let producto = new Producto({
+        usuario: req.usuario._id,
+        nombre: body.nombre,
+        precioUni: body.precioUni,
+        descripcion: body.descripcion,
+        disponible: body.disponible,
+        categoria: body.categoria
+    });
 
-producto.save((err, productoDB) => {
+    producto.save((err, productoDB) => {
 
-    if (err) {
-        return res.status(500).json({
-            ok: false,
-            err
+        if (err) {
+            return res.status(500).json({
+                ok: false,
+                err
+            });
+        }
+
+        res.status(201).json({
+            ok: true,
+            producto: productoDB
         });
-    }
 
-    res.status(201).json({
-        ok: true,
-        producto : productoDB
-    })
+    });
 
-})
 });
 
 /**
@@ -199,4 +228,4 @@ app.delete('/producto/:id',validacionToken, (res, req) => {
 
 });
 
-module.exports.app;
+module.exports = app;
