@@ -197,7 +197,9 @@ app.delete('/producto/:id',validacionToken, (res, req) => {
         if (err) {
             return res.status(500).json({
                 ok: false,
-                err
+                err :{
+                    messenger : 'ID de Producto no encontrado'
+                }
             });
         }
 

@@ -47,7 +47,27 @@ const jwt = require('jsonwebtoken');
 
   };
 
+  let validacionTokenImagen = (req, res, next) => {
+      let token = req.query.token;
+
+      //verificar el token
+    jwt.verify( token, process.env.SEED, (err, decoded) => {
+
+        if(err){
+            return res.status(401).json({
+                ok : false,
+                err
+            })
+        }
+
+        req.usuario = decoded.usuario;
+        next();
+
+    }) 
+  }
+
   module.exports = {
       validacionToken,
-      verificarROL
+      verificarROL,
+      validacionTokenImagen
   }
